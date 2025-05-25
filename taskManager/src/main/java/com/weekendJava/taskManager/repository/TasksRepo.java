@@ -1,7 +1,6 @@
 package com.weekendJava.taskManager.repository;
 
 
-import com.weekendJava.taskManager.Service.TaskService;
 import com.weekendJava.taskManager.model.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

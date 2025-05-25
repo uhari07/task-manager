@@ -1,15 +1,13 @@
 package com.weekendJava.taskManager.Service;
 
-
 import com.weekendJava.taskManager.config.TaskMapper;
 import com.weekendJava.taskManager.model.dto.TaskDTO;
 import com.weekendJava.taskManager.model.dto.Response;
 import com.weekendJava.taskManager.model.entity.TaskEntity;
 import com.weekendJava.taskManager.repository.TasksRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +17,7 @@ public class TaskService {
     private final TasksRepo tasksRepo;
     private final TaskMapper taskMapper;
 
-
+    @Autowired
     public TaskService(TasksRepo tasksRepo, TaskMapper taskMapper) {
         this.tasksRepo = tasksRepo;
         this.taskMapper = taskMapper;
@@ -42,7 +40,7 @@ public class TaskService {
         return response;
     }
 
-    private Response getTaskBasedOnId(Long id){
+    public Response getTaskBasedOnId(Long id){
         TaskDTO taskDTO;
         Response response=new Response();
         try{
@@ -65,7 +63,7 @@ public class TaskService {
         }
         return response;
     }
-    private Response getTasksBasedOnUserName(String userName){
+    public Response getTasksBasedOnUserName(String userName){
         TaskDTO taskDTO;
         Response response=new Response();
         try{
@@ -88,7 +86,7 @@ public class TaskService {
         }
         return response;
     }
-    private Response getAllTask(){
+    public Response getAllTask(){
         Response response=new Response();
         try{
             List<TaskEntity> taskEntity=tasksRepo.findAll();
@@ -110,7 +108,7 @@ public class TaskService {
         return response;
     }
 
-    private Response UpdateTask(TaskDTO taskDTO){
+    public Response UpdateTask(TaskDTO taskDTO){
         Response response=new Response();
         try{
             Optional<TaskEntity> taskEntity=tasksRepo.findById(taskDTO.getId());
@@ -137,8 +135,7 @@ public class TaskService {
         return response;
     }
 
-    private Response deleteTask(Long id){
-        TaskDTO taskDTO;
+    public Response deleteTask(Long id){
         Response response=new Response();
         try{
             if(tasksRepo.existsById(id)){

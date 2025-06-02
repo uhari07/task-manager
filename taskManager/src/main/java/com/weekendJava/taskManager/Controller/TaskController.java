@@ -23,15 +23,15 @@ public class TaskController {
         return response;
 
     }
-    @GetMapping("/getTaskById")
-    public Response getTaskBasedOnId(@RequestBody Long id) {
+    @GetMapping("/getTaskById/")
+    public Response getTaskBasedOnId(@RequestParam Long id) {
         Response response;
         response=taskService.getTaskBasedOnId(id);
         return response;
 
     }
-    @GetMapping("/tasksByUserName")
-    public Response getTasksBasedOnUserName(@RequestBody String userName) {
+    @GetMapping("/tasksByUserName/")
+    public Response getTasksBasedOnUserName(@RequestParam String userName) {
         Response response;
         response=taskService.getTasksBasedOnUserName(userName);
         return response;
@@ -51,8 +51,8 @@ public class TaskController {
         return response;
 
     }
-    @GetMapping("/deleteTask")
-    public Response deleteTask(@RequestBody Long id) {
+    @PostMapping("/deleteTask/")
+    public Response deleteTask(@RequestParam Long id) {
         Response response;
         response=taskService.deleteTask(id);
         return response;

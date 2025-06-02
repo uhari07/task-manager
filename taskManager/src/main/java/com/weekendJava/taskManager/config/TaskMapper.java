@@ -11,6 +11,7 @@ public class TaskMapper  {
         TaskEntity taskEntity=new TaskEntity();
         taskEntity.setTaskStatus(taskDTO.getTaskStatus());
         taskEntity.setTitle(taskDTO.getTitle());
+        taskEntity.setDescription(taskDTO.getDescription());
         taskEntity.setTaskStatus(taskDTO.getTaskStatus());
         taskEntity.setCreatedAt(taskDTO.getCreatedAt());
         taskEntity.setUpdatedAt(taskDTO.getUpdatedAt());
@@ -23,6 +24,7 @@ public class TaskMapper  {
 
     public TaskDTO toDto(TaskEntity taskEntity){
         TaskDTO taskDTO=new TaskDTO();
+        taskDTO.setId(taskEntity.getId());
         taskDTO.setTaskStatus(taskEntity.getTaskStatus());
         taskDTO.setTitle(taskEntity.getTitle());
         taskDTO.setTaskStatus(taskEntity.getTaskStatus());
@@ -30,6 +32,8 @@ public class TaskMapper  {
         taskDTO.setUpdatedAt(taskEntity.getUpdatedAt());
         taskDTO.setDueDate(taskEntity.getDueDate());
         taskDTO.setUserId(taskEntity.getUserId());
+        taskDTO.setUserName(taskEntity.getUserName());
+        taskDTO.setDescription(taskEntity.getDescription());
         return taskDTO;
     }
 

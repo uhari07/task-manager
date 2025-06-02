@@ -8,6 +8,7 @@ import com.weekendJava.taskManager.repository.TasksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +28,8 @@ public class TaskService {
     public Response createTask(TaskDTO taskDTO){
         Response response=new Response();
         try{
+            taskDTO.setCreatedAt(LocalDateTime.now());
+            taskDTO.setUpdatedAt(null);
             TaskEntity taskEntity = taskMapper.toEntity(taskDTO);
             TaskEntity saveTask=tasksRepo.save(taskEntity);
             response.setSuccess(true);
@@ -48,7 +51,7 @@ public class TaskService {
             if(taskEntity.isPresent()){
                 taskDTO=taskMapper.toDto(taskEntity.get());
                 response.setSuccess(true);
-                response.setMessage("Task Details for id"+id);
+                response.setMessage("Task Details for id : "+id);
                 response.setData(taskDTO);
 
             }
@@ -64,15 +67,14 @@ public class TaskService {
         return response;
     }
     public Response getTasksBasedOnUserName(String userName){
-        TaskDTO taskDTO;
         Response response=new Response();
         try{
-            Optional<TaskEntity> taskEntity=tasksRepo.findByUserName(userName);
-            if(taskEntity.isPresent()){
-                taskDTO=taskMapper.toDto(taskEntity.get());
+            List<TaskEntity> taskEntity=tasksRepo.findByUserName(userName);
+            if(!taskEntity.isEmpty()){
+                List<TaskDTO> taskDTOS=taskEntity.stream().map(taskMapper::toDto).collect(Collectors.toList());
                 response.setSuccess(true);
                 response.setMessage("Task Details for userName"+userName);
-                response.setData(taskDTO);
+                response.setData(taskDTOS);
 
             }
             else{
@@ -117,6 +119,8 @@ public class TaskService {
                 taskEntity.get().setDescription(taskDTO.getDescription());
                 taskEntity.get().setDueDate(taskDTO.getDueDate());
                 taskEntity.get().setUserName(taskDTO.getUserName());
+                taskEntity.get().setUpdatedAt(LocalDateTime.now());
+                taskEntity.get().setTaskStatus(taskDTO.getTaskStatus());
                 taskDTO=taskMapper.toDto(taskEntity.get());
                 response.setSuccess(true);
                 response.setMessage("Task Details Updated");
